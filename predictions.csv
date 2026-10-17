@@ -1,0 +1,304 @@
+prediction,label,confidence,probability_disease
+0,no heart disease,0.8345,0.1655
+1,heart disease,0.9856,0.9856
+1,heart disease,0.9907,0.9907
+0,no heart disease,0.9156,0.0844
+0,no heart disease,0.9667,0.0333
+0,no heart disease,0.9411,0.0589
+1,heart disease,0.7092,0.7092
+0,no heart disease,0.8967,0.1033
+1,heart disease,0.973,0.973
+1,heart disease,0.8377,0.8377
+1,heart disease,0.5085,0.5085
+0,no heart disease,0.8374,0.1626
+1,heart disease,0.7607,0.7607
+0,no heart disease,0.7929,0.2071
+0,no heart disease,0.7746,0.2254
+0,no heart disease,0.9481,0.0519
+0,no heart disease,0.7498,0.2502
+0,no heart disease,0.7491,0.2509
+0,no heart disease,0.9821,0.0179
+0,no heart disease,0.9137,0.0863
+0,no heart disease,0.7582,0.2418
+0,no heart disease,0.9765,0.0235
+0,no heart disease,0.6641,0.3359
+1,heart disease,0.7659,0.7659
+1,heart disease,0.9913,0.9913
+0,no heart disease,0.9661,0.0339
+0,no heart disease,0.9904,0.0096
+0,no heart disease,0.9381,0.0619
+0,no heart disease,0.713,0.287
+1,heart disease,0.9183,0.9183
+0,no heart disease,0.8592,0.1408
+1,heart disease,0.9063,0.9063
+0,no heart disease,0.9362,0.0638
+1,heart disease,0.7276,0.7276
+0,no heart disease,0.9434,0.0566
+0,no heart disease,0.8363,0.1637
+1,heart disease,0.9336,0.9336
+1,heart disease,0.9802,0.9802
+1,heart disease,0.9876,0.9876
+0,no heart disease,0.6963,0.3037
+1,heart disease,0.9553,0.9553
+0,no heart disease,0.7587,0.2413
+0,no heart disease,0.722,0.278
+0,no heart disease,0.9362,0.0638
+0,no heart disease,0.9224,0.0776
+1,heart disease,0.8237,0.8237
+0,no heart disease,0.9529,0.0471
+1,heart disease,0.9406,0.9406
+0,no heart disease,0.8294,0.1706
+0,no heart disease,0.9211,0.0789
+0,no heart disease,0.9341,0.0659
+0,no heart disease,0.5656,0.4344
+1,heart disease,0.6595,0.6595
+0,no heart disease,0.9266,0.0734
+1,heart disease,0.9409,0.9409
+1,heart disease,0.9927,0.9927
+1,heart disease,0.7978,0.7978
+0,no heart disease,0.5821,0.4179
+0,no heart disease,0.6031,0.3969
+1,heart disease,0.5669,0.5669
+1,heart disease,0.6887,0.6887
+0,no heart disease,0.9524,0.0476
+1,heart disease,0.9898,0.9898
+0,no heart disease,0.9901,0.0099
+1,heart disease,0.9683,0.9683
+1,heart disease,0.9946,0.9946
+0,no heart disease,0.7333,0.2667
+0,no heart disease,0.6882,0.3118
+1,heart disease,0.9574,0.9574
+0,no heart disease,0.6603,0.3397
+0,no heart disease,0.9751,0.0249
+1,heart disease,0.9337,0.9337
+1,heart disease,0.9916,0.9916
+1,heart disease,0.7183,0.7183
+0,no heart disease,0.522,0.478
+0,no heart disease,0.9499,0.0501
+1,heart disease,0.9887,0.9887
+0,no heart disease,0.7775,0.2225
+0,no heart disease,0.7776,0.2224
+1,heart disease,0.8955,0.8955
+1,heart disease,0.673,0.673
+0,no heart disease,0.7465,0.2535
+0,no heart disease,0.9302,0.0698
+1,heart disease,0.8117,0.8117
+0,no heart disease,0.9229,0.0771
+0,no heart disease,0.947,0.053
+0,no heart disease,0.9222,0.0778
+0,no heart disease,0.9724,0.0276
+0,no heart disease,0.9201,0.0799
+0,no heart disease,0.9785,0.0215
+1,heart disease,0.5067,0.5067
+1,heart disease,0.9519,0.9519
+1,heart disease,0.857,0.857
+0,no heart disease,0.9868,0.0132
+0,no heart disease,0.9868,0.0132
+1,heart disease,0.899,0.899
+1,heart disease,0.9768,0.9768
+1,heart disease,0.9534,0.9534
+0,no heart disease,0.6017,0.3983
+0,no heart disease,0.8577,0.1423
+0,no heart disease,0.854,0.146
+0,no heart disease,0.9667,0.0333
+0,no heart disease,0.6372,0.3628
+0,no heart disease,0.9213,0.0787
+1,heart disease,0.8456,0.8456
+0,no heart disease,0.7698,0.2302
+1,heart disease,0.8899,0.8899
+1,heart disease,0.8341,0.8341
+1,heart disease,0.9854,0.9854
+1,heart disease,0.7766,0.7766
+1,heart disease,0.7825,0.7825
+1,heart disease,0.9239,0.9239
+0,no heart disease,0.9201,0.0799
+1,heart disease,0.8452,0.8452
+1,heart disease,0.7374,0.7374
+0,no heart disease,0.6511,0.3489
+0,no heart disease,0.953,0.047
+0,no heart disease,0.9479,0.0521
+1,heart disease,0.9738,0.9738
+1,heart disease,0.9869,0.9869
+1,heart disease,0.9478,0.9478
+1,heart disease,0.9765,0.9765
+0,no heart disease,0.8399,0.1601
+1,heart disease,0.943,0.943
+1,heart disease,0.5428,0.5428
+0,no heart disease,0.9231,0.0769
+1,heart disease,0.9878,0.9878
+1,heart disease,0.9827,0.9827
+0,no heart disease,0.9426,0.0574
+0,no heart disease,0.9637,0.0363
+0,no heart disease,0.5553,0.4447
+0,no heart disease,0.5127,0.4873
+0,no heart disease,0.9379,0.0621
+0,no heart disease,0.6913,0.3087
+0,no heart disease,0.9764,0.0236
+0,no heart disease,0.8794,0.1206
+1,heart disease,0.8494,0.8494
+1,heart disease,0.9656,0.9656
+1,heart disease,0.8836,0.8836
+0,no heart disease,0.8254,0.1746
+0,no heart disease,0.8677,0.1323
+1,heart disease,0.6285,0.6285
+0,no heart disease,0.9599,0.0401
+1,heart disease,0.6745,0.6745
+0,no heart disease,0.5349,0.4651
+0,no heart disease,0.9678,0.0322
+1,heart disease,0.9906,0.9906
+0,no heart disease,0.976,0.024
+0,no heart disease,0.8789,0.1211
+0,no heart disease,0.9538,0.0462
+0,no heart disease,0.5956,0.4044
+0,no heart disease,0.7599,0.2401
+0,no heart disease,0.6673,0.3327
+1,heart disease,0.9915,0.9915
+1,heart disease,0.9413,0.9413
+1,heart disease,0.968,0.968
+1,heart disease,0.7104,0.7104
+1,heart disease,0.9007,0.9007
+1,heart disease,0.978,0.978
+1,heart disease,0.5546,0.5546
+0,no heart disease,0.8658,0.1342
+1,heart disease,0.7791,0.7791
+0,no heart disease,0.9731,0.0269
+0,no heart disease,0.7798,0.2202
+0,no heart disease,0.8167,0.1833
+1,heart disease,0.5253,0.5253
+0,no heart disease,0.961,0.039
+0,no heart disease,0.7427,0.2573
+1,heart disease,0.7221,0.7221
+0,no heart disease,0.9518,0.0482
+1,heart disease,0.9746,0.9746
+1,heart disease,0.8446,0.8446
+0,no heart disease,0.5625,0.4375
+0,no heart disease,0.6345,0.3655
+1,heart disease,0.9642,0.9642
+1,heart disease,0.9945,0.9945
+1,heart disease,0.8012,0.8012
+1,heart disease,0.9761,0.9761
+0,no heart disease,0.6413,0.3587
+0,no heart disease,0.7665,0.2335
+1,heart disease,0.7801,0.7801
+1,heart disease,0.9766,0.9766
+0,no heart disease,0.5914,0.4086
+1,heart disease,0.731,0.731
+0,no heart disease,0.8675,0.1325
+0,no heart disease,0.8832,0.1168
+0,no heart disease,0.9024,0.0976
+1,heart disease,0.928,0.928
+1,heart disease,0.8709,0.8709
+1,heart disease,0.9191,0.9191
+0,no heart disease,0.9664,0.0336
+1,heart disease,0.9954,0.9954
+1,heart disease,0.879,0.879
+1,heart disease,0.8175,0.8175
+0,no heart disease,0.9202,0.0798
+1,heart disease,0.9446,0.9446
+1,heart disease,0.693,0.693
+0,no heart disease,0.6526,0.3474
+0,no heart disease,0.9773,0.0227
+0,no heart disease,0.8332,0.1668
+0,no heart disease,0.9469,0.0531
+0,no heart disease,0.757,0.243
+0,no heart disease,0.5847,0.4153
+0,no heart disease,0.9118,0.0882
+0,no heart disease,0.6527,0.3473
+1,heart disease,0.9887,0.9887
+1,heart disease,0.9937,0.9937
+1,heart disease,0.9352,0.9352
+0,no heart disease,0.908,0.092
+0,no heart disease,0.6479,0.3521
+0,no heart disease,0.9925,0.0075
+1,heart disease,0.5307,0.5307
+0,no heart disease,0.8058,0.1942
+1,heart disease,0.9469,0.9469
+0,no heart disease,0.5202,0.4798
+0,no heart disease,0.5987,0.4013
+0,no heart disease,0.9899,0.0101
+0,no heart disease,0.6592,0.3408
+1,heart disease,0.8124,0.8124
+0,no heart disease,0.7907,0.2093
+0,no heart disease,0.9824,0.0176
+0,no heart disease,0.9904,0.0096
+0,no heart disease,0.9963,0.0037
+1,heart disease,0.9937,0.9937
+1,heart disease,0.6551,0.6551
+0,no heart disease,0.9878,0.0122
+0,no heart disease,0.8432,0.1568
+0,no heart disease,0.92,0.08
+1,heart disease,0.9298,0.9298
+1,heart disease,0.7587,0.7587
+0,no heart disease,0.9641,0.0359
+1,heart disease,0.8115,0.8115
+0,no heart disease,0.6384,0.3616
+0,no heart disease,0.6514,0.3486
+0,no heart disease,0.9096,0.0904
+1,heart disease,0.9818,0.9818
+1,heart disease,0.9009,0.9009
+1,heart disease,0.6236,0.6236
+0,no heart disease,0.9311,0.0689
+0,no heart disease,0.9167,0.0833
+0,no heart disease,0.9334,0.0666
+0,no heart disease,0.9746,0.0254
+0,no heart disease,0.9464,0.0536
+1,heart disease,0.6967,0.6967
+0,no heart disease,0.9844,0.0156
+1,heart disease,0.708,0.708
+1,heart disease,0.7517,0.7517
+1,heart disease,0.9494,0.9494
+1,heart disease,0.8652,0.8652
+0,no heart disease,0.8947,0.1053
+1,heart disease,0.6525,0.6525
+1,heart disease,0.9862,0.9862
+1,heart disease,0.9844,0.9844
+0,no heart disease,0.9818,0.0182
+0,no heart disease,0.6429,0.3571
+0,no heart disease,0.981,0.019
+0,no heart disease,0.7422,0.2578
+0,no heart disease,0.9275,0.0725
+0,no heart disease,0.7989,0.2011
+0,no heart disease,0.6823,0.3177
+0,no heart disease,0.828,0.172
+0,no heart disease,0.7367,0.2633
+0,no heart disease,0.9856,0.0144
+0,no heart disease,0.9704,0.0296
+1,heart disease,0.9706,0.9706
+1,heart disease,0.8466,0.8466
+0,no heart disease,0.5086,0.4914
+1,heart disease,0.6303,0.6303
+0,no heart disease,0.5214,0.4786
+0,no heart disease,0.9579,0.0421
+1,heart disease,0.9671,0.9671
+1,heart disease,0.6015,0.6015
+1,heart disease,0.9938,0.9938
+0,no heart disease,0.8501,0.1499
+0,no heart disease,0.7305,0.2695
+1,heart disease,0.6091,0.6091
+0,no heart disease,0.6914,0.3086
+0,no heart disease,0.9606,0.0394
+1,heart disease,0.5327,0.5327
+0,no heart disease,0.8125,0.1875
+1,heart disease,0.9839,0.9839
+0,no heart disease,0.9673,0.0327
+1,heart disease,0.9376,0.9376
+0,no heart disease,0.9458,0.0542
+1,heart disease,0.8589,0.8589
+1,heart disease,0.91,0.91
+1,heart disease,0.9405,0.9405
+1,heart disease,0.5317,0.5317
+0,no heart disease,0.6984,0.3016
+0,no heart disease,0.9261,0.0739
+1,heart disease,0.549,0.549
+0,no heart disease,0.9635,0.0365
+1,heart disease,0.5079,0.5079
+1,heart disease,0.9816,0.9816
+0,no heart disease,0.7872,0.2128
+0,no heart disease,0.9604,0.0396
+1,heart disease,0.9789,0.9789
+1,heart disease,0.6923,0.6923
+0,no heart disease,0.5782,0.4218
+1,heart disease,0.9802,0.9802
+1,heart disease,0.9791,0.9791
+0,no heart disease,0.6968,0.3032
+0,no heart disease,0.9657,0.0343

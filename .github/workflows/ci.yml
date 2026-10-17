@@ -15,8 +15,12 @@ jobs:
         run: flake8 src app tests
       - name: Unit tests
         run: pytest -v --junitxml=pytest-report.xml
+      - name: Generate EDA figures
+        run: python -m src.eda
       - name: Train model
         run: python -m src.train
+      - name: Inference smoke test
+        run: python -m src.predict --csv data/heart_clean.csv --out predictions.csv
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -25,7 +29,9 @@ jobs:
           path: |
             models/
             mlflow.db
-            mlartifacts/
+            mlruns/
+            predictions.csv
+            screenshots/eda/
             pytest-report.xml
 
   docker:

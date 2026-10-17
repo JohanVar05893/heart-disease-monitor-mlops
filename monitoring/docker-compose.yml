@@ -6,7 +6,14 @@ services:
     image: prom/prometheus:latest
     volumes: ["./prometheus.yml:/etc/prometheus/prometheus.yml"]
     ports: ["9090:9090"]
+    depends_on: [api]
   grafana:
     image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     ports: ["3000:3000"]
     depends_on: [prometheus]
