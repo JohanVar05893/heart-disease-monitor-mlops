@@ -1,0 +1,122 @@
+name: Deploy demo (Docker, Kubernetes, monitoring)
+
+# Manual run: Actions tab -> "Deploy demo" -> Run workflow.
+# Produces the Docker, Kubernetes and monitoring evidence on a GitHub runner.
+on:
+  workflow_dispatch:
+
+env:
+  SAMPLE: '{"age":63,"sex":1,"cp":1,"trestbps":145,"chol":233,"fbs":1,"restecg":2,"thalach":150,"exang":0,"oldpeak":2.3,"slope":3,"ca":0,"thal":6}'
+
+jobs:
+  docker:
+    name: Step 7 - Docker build and run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t heart-api:1.0 . 2>&1 | tee docker-build.log
+      - name: Run container and call the API
+        run: |
+          set -euo pipefail
+          docker run -d -p 8000:8000 --name heart-api heart-api:1.0
+          for i in $(seq 1 20); do curl -sf localhost:8000/health && break || sleep 2; done
+          {
+            echo "## docker images"; docker images heart-api
+            echo "## GET /health"; curl -sf localhost:8000/health
+            echo; echo "## POST /predict"
+            curl -sf -X POST localhost:8000/predict -H "Content-Type: application/json" -d "$SAMPLE"
+            echo; echo "## docker ps"; docker ps
+            echo "## container logs"; docker logs heart-api
+          } 2>&1 | tee docker-run.log
+          cat docker-run.log >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docker-evidence
+          path: docker-*.log
+
+  kubernetes:
+    name: Step 8 - Kubernetes (kind) deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: heart
+      - name: Build image and load into the cluster
+        run: |
+          docker build -t heart-api:1.0 .
+          kind load docker-image heart-api:1.0 --name heart
+      - name: Deploy manifests and verify
+        run: |
+          set -euo pipefail
+          kubectl apply -f k8s/
+          kubectl rollout status deployment/heart-api --timeout=120s
+          kubectl port-forward svc/heart-api 8080:80 > /dev/null 2>&1 &
+          for i in $(seq 1 15); do curl -sf localhost:8080/health && break || sleep 2; done
+          {
+            echo "## kubectl get pods,svc -o wide"; kubectl get pods,svc -o wide
+            echo "## kubectl get deployment"; kubectl get deployment heart-api
+            echo "## GET /health via service"; curl -sf localhost:8080/health
+            echo; echo "## POST /predict via service"
+            curl -sf -X POST localhost:8080/predict -H "Content-Type: application/json" -d "$SAMPLE"
+            echo; echo "## pod logs"; kubectl logs -l app=heart-api --tail=10 --prefix
+          } 2>&1 | tee k8s-evidence.log
+          cat k8s-evidence.log >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kubernetes-evidence
+          path: k8s-evidence.log
+
+  monitoring:
+    name: Step 9 - Prometheus and Grafana
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start the monitoring stack
+        run: cd monitoring && docker compose up --build -d
+      - name: Generate traffic and verify metrics
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 30); do curl -sf localhost:8000/health && break || sleep 2; done
+          for i in $(seq 1 20); do
+            curl -sf -X POST localhost:8000/predict -H "Content-Type: application/json" \
+              -d "$SAMPLE" > /dev/null
+          done
+          curl -s -X POST localhost:8000/predict -H "Content-Type: application/json" \
+            -d '{"age":-5}' > /dev/null || true
+          sleep 20   # let Prometheus scrape (interval 5s)
+          for i in $(seq 1 30); do curl -sf localhost:3000/api/health && break || sleep 2; done
+          {
+            echo "## Prometheus targets"
+            curl -sf localhost:9090/api/v1/targets \
+              | jq '.data.activeTargets[] | {job: .labels.job, health, lastError}'
+            echo "## api_requests_total"
+            curl -sf 'localhost:9090/api/v1/query?query=sum%20by%20(path,status)(api_requests_total)' \
+              | jq '.data.result[] | {metric, value: .value[1]}'
+            echo "## api_predictions_total"
+            curl -sf 'localhost:9090/api/v1/query?query=api_predictions_total' \
+              | jq '.data.result[] | {metric, value: .value[1]}'
+            echo "## Grafana provisioned dashboards"
+            curl -sf -u admin:admin 'localhost:3000/api/search?query=Heart' | jq '.[].title'
+            echo "## API request logs"
+            (cd monitoring && docker compose logs api | tail -25)
+          } 2>&1 | tee monitoring-evidence.log
+          curl -sf localhost:9090/api/v1/targets | jq -e \
+            '.data.activeTargets | map(select(.health=="up")) | length >= 1' > /dev/null
+          curl -sf -u admin:admin 'localhost:3000/api/search?query=Heart' | jq -e 'length >= 1' > /dev/null
+          cat monitoring-evidence.log >> "$GITHUB_STEP_SUMMARY"
+      - name: Export Grafana dashboard JSON from the live server
+        run: curl -sf -u admin:admin localhost:3000/api/dashboards/uid/heart-api > grafana-dashboard.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monitoring-evidence
+          path: |
+            monitoring-evidence.log
+            grafana-dashboard.json
+      - name: Tear down
+        if: always()
+        run: cd monitoring && docker compose down
