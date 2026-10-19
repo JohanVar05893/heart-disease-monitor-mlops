@@ -5,89 +5,6 @@ the model as a containerised, monitored FastAPI service deployed on Kubernetes.
 
 ![architecture](docs/architecture.png)
 
-## Run it in GitHub Codespaces
-
-Everything below runs in a Codespace with no local installs (Docker, `kubectl` and Python are
-preinstalled). Run all commands from the repo root, `/workspaces/heart-disease-monitor-mlops`.
-
-**1. Open the Codespace:** on the repo page click **Code → Codespaces → Create codespace on main**,
-then open a terminal (**Terminal → New Terminal**).
-
-**2. Python environment, data, tests and training**
-
-```bash
-python3 --version                       # 3.11 recommended (CI uses 3.11)
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python -m src.data && python -m src.eda
-flake8 src app tests docs && pytest -v
-python -m src.train
-```
-
-**3. MLflow UI** (second terminal, activate the venv first)
-
-```bash
-source .venv/bin/activate
-mlflow ui --backend-store-uri sqlite:///mlflow.db
-```
-
-Open the **Ports** tab, find port **5000** and click the globe icon to open it in the browser.
-
-**4. Docker**
-
-```bash
-docker build -t heart-api:1.0 .
-docker run -d -p 8000:8000 --name heart-api heart-api:1.0
-curl localhost:8000/health
-curl -X POST localhost:8000/predict -H "Content-Type: application/json" \
-  -d '{"age":63,"sex":1,"cp":1,"trestbps":145,"chol":233,"fbs":1,"restecg":2,"thalach":150,"exang":0,"oldpeak":2.3,"slope":3,"ca":0,"thal":6}'
-docker logs heart-api
-docker rm -f heart-api                  # free port 8000 for the next step
-```
-
-**5. Monitoring (Prometheus + Grafana)** – do this **before** creating the kind cluster
-
-```bash
-cd monitoring && docker compose up --build -d && cd ..
-docker compose -f monitoring/docker-compose.yml ps
-for i in $(seq 1 20); do curl -s -X POST localhost:8000/predict -H "Content-Type: application/json" \
-  -d '{"age":63,"sex":1,"cp":1,"trestbps":145,"chol":233,"fbs":1,"restecg":2,"thalach":150,"exang":0,"oldpeak":2.3,"slope":3,"ca":0,"thal":6}' > /dev/null; done
-```
-
-In the **Ports** tab open **9090** (Prometheus → Status → Targets, `heart-api` should be **UP**) and
-**3000** (Grafana, login `admin` / `admin`, dashboard **Heart Disease API**). When finished:
-`docker compose -f monitoring/docker-compose.yml down`.
-
-**6. Kubernetes with kind** (Codespaces has no cluster, so create one)
-
-```bash
-curl -Lo kind https://kind.sigs.k8s.io/dl/v0.24.0/kind-linux-amd64
-chmod +x kind && sudo mv kind /usr/local/bin/
-kind create cluster --name heart
-kind load docker-image heart-api:1.0 --name heart     # needs the image from step 4
-kubectl apply -f k8s/
-kubectl rollout status deployment/heart-api
-kubectl get pods,svc -o wide                          # 2 pods Running; EXTERNAL-IP stays <pending> on kind
-kubectl port-forward svc/heart-api 8080:80 > /dev/null 2>&1 &
-curl localhost:8080/health
-curl -X POST localhost:8080/predict -H "Content-Type: application/json" \
-  -d '{"age":63,"sex":1,"cp":1,"trestbps":145,"chol":233,"fbs":1,"restecg":2,"thalach":150,"exang":0,"oldpeak":2.3,"slope":3,"ca":0,"thal":6}'
-```
-
-Clean up: `kill %1; kubectl delete -f k8s/; kind delete cluster --name heart`.
-
-**Codespaces notes and troubleshooting**
-
-* **Order matters:** run monitoring (step 5) before creating the kind cluster. In one Codespace, container
-  networking stopped working after a cluster was created (Prometheus showed `heart-api` as DOWN). If that
-  happens, run **Cmd/Ctrl+Shift+P → Codespaces: Rebuild Container** and repeat steps 4–5 first.
-* **Port already allocated:** `docker rm -f heart-api`, then `docker ps` to check nothing else holds port 8000.
-* **`kind create cluster` says the cluster exists:** `kind delete cluster --name heart` and create it again.
-* **Docker Hub 401 / "Sign in" errors** happen only on managed laptops with a Docker Desktop sign-in policy,
-  not in Codespaces.
-* **No Codespace available?** Run the manual **Deploy demo** workflow (Actions tab). It builds, runs, deploys
-  to kind and checks Prometheus/Grafana on a GitHub runner and saves the output as artifacts.
-* Stop the Codespace at <https://github.com/codespaces> when you are done to save quota.
 
 ## Repository layout
 
@@ -151,16 +68,25 @@ Response:
 ```
 (`ca` and `thal` are optional – missing values are imputed by the pipeline.)
 
-## 5. Kubernetes (local: Docker Desktop with Kubernetes enabled; for Codespaces see the section above)
+## 5. Kubernetes (runs in a GitHub Codespace)
+
+The deployment was run in a GitHub Codespace using a kind cluster (Docker Desktop or Minikube also work).
 
 ```bash
-kubectl config use-context docker-desktop
+# in the Codespace terminal; the image from step 4 must exist (docker build -t heart-api:1.0 .)
+curl -Lo kind https://kind.sigs.k8s.io/dl/v0.24.0/kind-linux-amd64
+chmod +x kind && sudo mv kind /usr/local/bin/
+kind create cluster --name heart
+kind load docker-image heart-api:1.0 --name heart
 kubectl apply -f k8s/
-kubectl get pods,svc          # LoadBalancer exposes the API on http://localhost
-curl localhost/health
+kubectl rollout status deployment/heart-api
+kubectl get pods,svc -o wide          # 2 pods Running; EXTERNAL-IP stays <pending> on kind
+kubectl port-forward svc/heart-api 8080:80 > /dev/null 2>&1 &
+curl localhost:8080/health
 ```
 
-For Minikube: `minikube image load heart-api:1.0` and `minikube tunnel`.
+For Docker Desktop use `kubectl config use-context docker-desktop` and skip the kind steps; for Minikube use
+`minikube image load heart-api:1.0` and `minikube tunnel`.
 
 ## 6. Monitoring
 
